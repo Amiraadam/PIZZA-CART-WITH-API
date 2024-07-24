@@ -1,7 +1,7 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('pizzaCartWithAPIWidget', function () {
         return {
-
+            messagePay: '',
             message: 'PLEASE LOGIN HERE BEFORE PLACING AN ORDER!',
             username: '',
             pizzas: [],
@@ -116,17 +116,20 @@ document.addEventListener('alpine:init', () => {
                     const params = {
                         cart_code: this.cartId,
                     }
+                    console.log(typeof(this.paymentAmount));
+                    console.log(this.cart.total);
 
                     axios
                     .post('https://pizza-api.projectcodex.net/api/pizza-cart/pay', params)
                         .then(() => {
-                            if (!this.paymentAmount) {
+                            if (!Number(this.paymentAmount)) {
                                 this.paymentMessage = 'Please enter an amount based on your purchase';
                             }
-                                else if (this.paymentAmount >= this.totalAmount) {
-                                this.change = (this.paymentAmount - this.totalAmount).toFixed(2);
-                                this.paymentMessage = 'Payment successful! Your change is R${this.change}.';
-                                this.message = '${this.username} made a successful purchase! Enjoy your food'
+                          
+                                else if (Number(this.paymentAmount) >= this.cart.total) {
+                                this.change = (Number(this.paymentAmount) - this.cart.total).toFixed(2);
+                                this.paymentMessage = `Payment successful! Your change is R${this.change}.`;
+                                this.messagePay = `${this.username} made a successful purchase! Enjoy your food`
                                 setTimeout(() => {
                                     this.cart.total = 0
                                     this.paymentAmount = 0;
@@ -136,7 +139,7 @@ document.addEventListener('alpine:init', () => {
 
                             } else if (this.paymentAmount < this.cart.total) {
                             this.paymentMessage = 'Insufficient funds! .'
-                        }                          this.change = 0;
+                        }                         
                         })
                     .catch(err => alert(err));
                 }

@@ -12,6 +12,12 @@
 .body {
     background-color: black;
 }
+.paymentMessage, .payMessage {
+    color: green;
+}
+.cartData {
+    background-color: #D3B786;
+}
 
 H1 {
     text-align: center;
