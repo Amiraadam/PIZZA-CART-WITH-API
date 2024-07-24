@@ -39,6 +39,8 @@
                                     </div>
                                 </div>
 
+                               
+
                                 <template x-if="loggedIn">
                                     <div style="text-align: right;" style="text-align: center;">
                                         <div class="cartData">
@@ -109,6 +111,29 @@
                         </div>
                     </section>
 
+                    <h2>Order History</h2>
+                                <div x-show="History.Length > 0">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <template x-for="cart in history">
+                                            <tr>
+                                                <td x-text="order.id"></td>
+                                                <td x-text="order.date"></td>
+                                                <td x-text="order.total"></td>
+                                                <td x-text="cart.status"></td>
+                                            </tr>
+                                        
+                                        </template>
+                                    </table>
+            
+                                </div>
                     <br>
                     <template x-if="loggedIn">
                         <h2 style="text-align: center;">PIZZA MENU</h2>

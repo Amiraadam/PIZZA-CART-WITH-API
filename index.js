@@ -13,6 +13,7 @@ document.addEventListener('alpine:init', () => {
             paymentAmount: 0,
             change: 0,
             loggedIn: false,
+          
 
             logIn() {
                 localStorage.setItem('username', this.username);
@@ -21,6 +22,7 @@ document.addEventListener('alpine:init', () => {
                     localStorage.setItem('cartId', cart.data.cart_code);
                     if (this.username.length > 3) {
                         this.loggedIn = true;
+                     
                     } 
                     else if (this.username.length <= 3) {
                         alert("Please enter a valid name!");
@@ -35,6 +37,7 @@ document.addEventListener('alpine:init', () => {
                 this.cart = { total: 0 };
                 this.username = '';
                 this.message = 'PLEASE LOGIN HERE BEFORE PLACING AN ORDER!';
+               
             },
 
             init() {
@@ -54,8 +57,9 @@ document.addEventListener('alpine:init', () => {
             featuredPizzas() {
                 return axios
                   .get('https://pizza-api.projectcodex.net/api/pizzas/featured')
-              },
-              postfeaturedPizzas() {
+            },
+
+            postfeaturedPizzas() {
                 return axios
                   .post('https://pizza-api.projectcodex.net/api/pizzas/featured')
               },
@@ -112,6 +116,17 @@ document.addEventListener('alpine:init', () => {
                     .catch(err => alert(err));
                 },
 
+                fetchOredrHistory() {
+                    const url = 'https://pizza-api.projectcodex.net/api/pizza-cart/${this.cartId}/history';
+                    axios.get(url)
+                        then((res) => {
+                            console.log(result.data.orders);
+                         this.History = result = reslut.data.orders;
+                         console.log(this.History);
+                    })
+                    .catch(err => alert(err));
+                },
+
                 pay(pizza) {
                     const params = {
                         cart_code: this.cartId,
@@ -146,3 +161,6 @@ document.addEventListener('alpine:init', () => {
             }           
         });
     })
+          
+        
+   
